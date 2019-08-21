@@ -1,0 +1,5 @@
+s3fs:
+  bucket: "{{ secret.s3fs.bucket }}"
+  access_key_id: "{{ secret.s3fs.access_key_id }}"
+  secret_access_key: "{{ secret.s3fs.secret_access_key }}"
+  dest: /mnt/s3fs
