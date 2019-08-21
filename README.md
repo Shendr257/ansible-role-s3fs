@@ -1,4 +1,4 @@
-Ansible Role: docker
+Ansible Role: s3fs
 =========
 
 An Ansible Role that installs s3fs.
@@ -24,7 +24,7 @@ Example Playbook
 ```yaml
 - hosts: all
   roles:
-    - commis1059.docker
+    - commis1059.s3fs
 ```
 
 License
