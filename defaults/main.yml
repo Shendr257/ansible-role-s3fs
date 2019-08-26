@@ -3,3 +3,7 @@ s3fs:
   access_key_id: "{{ secret.s3fs.access_key_id }}"
   secret_access_key: "{{ secret.s3fs.secret_access_key }}"
   dest: /mnt/s3fs
+  passwd_file: /etc/passwd-s3fs
+  uid: 0
+  gid: 0
+  umask: 0022
