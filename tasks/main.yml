@@ -35,7 +35,7 @@
     fstype: fuse
     src: "s3fs#{{ s3fs.bucket }}"
     path: "{{ s3fs.dest }}"
-    opts: "_netdev,allow_other,nonempty,url=http://storage.yandexcloud.net,passwd_file={{ s3fs.passwd_file }},uid={{ s3fs.uid }},gid={{ s3fs.gid }},umask={{ s3fs.umask }}"
+    opts: "_netdev,allow_other,nonempty,url=http://storage.yandexcloud.net,multipart_size=1024,passwd_file={{ s3fs.passwd_file }},uid={{ s3fs.uid }},gid={{ s3fs.gid }},umask={{ s3fs.umask }}"
     state: mounted
   # no_log: true
   become: true
