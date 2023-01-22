@@ -6,25 +6,37 @@
   when: ansible_os_family == 'Debian'
 
 - name: Create s3fs mount point
-  file:
+  ansible.builtin.file:
     path: "{{ s3fs.dest }}"
     state: directory
-  become: yes
+  become: true
 
 - name: Create /etc/passwd-s3fs
-  copy:
+  ansible.builtin.copy:
     dest: /etc/passwd-s3fs
     content: "{{ s3fs.access_key_id }}:{{ s3fs.secret_access_key }}\n"
     mode: 0600
-  no_log: yes
-  become: yes
+  no_log: true
+  become: true
 
-- name: Mount bucket to mount point
-  mount:
+- name: Mount bucket to mount point (default)
+  ansible.posix.mount:
     fstype: fuse
     src: "s3fs#{{ s3fs.bucket }}"
     path: "{{ s3fs.dest }}"
     opts: "_netdev,allow_other,nonempty,passwd_file={{ s3fs.passwd_file }},uid={{ s3fs.uid }},gid={{ s3fs.gid }},umask={{ s3fs.umask }}"
     state: mounted
-  no_log: yes
-  become: yes
+  # no_log: true
+  become: true
+  when: s3fs.provider == "aws"
+
+- name: Mount bucket to mount point (Yandex S3)
+  ansible.posix.mount:
+    fstype: fuse
+    src: "s3fs#{{ s3fs.bucket }}"
+    path: "{{ s3fs.dest }}"
+    opts: "_netdev,allow_other,nonempty,url=http://storage.yandexcloud.net,passwd_file={{ s3fs.passwd_file }},uid={{ s3fs.uid }},gid={{ s3fs.gid }},umask={{ s3fs.umask }}"
+    state: mounted
+  # no_log: true
+  become: true
+  when: s3fs.provider == "yandex"

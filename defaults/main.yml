@@ -1,7 +1,8 @@
 s3fs:
-  bucket: "{{ secret.s3fs.bucket }}"
-  access_key_id: "{{ secret.s3fs.access_key_id }}"
-  secret_access_key: "{{ secret.s3fs.secret_access_key }}"
+  bucket: "{{ s3fs_bucket }}"
+  access_key_id: "{{ s3fs_access_key_id }}"
+  secret_access_key: "{{ s3fs_secret_access_key }}"
+  provider: "{{ s3fs_provider | default('aws') }}"
   dest: /mnt/s3fs
   passwd_file: /etc/passwd-s3fs
   uid: 0
