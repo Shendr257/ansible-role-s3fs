@@ -40,3 +40,14 @@
   # no_log: true
   become: true
   when: s3fs.provider == "yandex"
+
+- name: Mount bucket to mount point (VK_ru S3)
+  ansible.posix.mount:
+    fstype: fuse
+    src: "s3fs#{{ s3fs.bucket }}"
+    path: "{{ s3fs.dest }}"
+    opts: "_netdev,allow_other,nonempty,url=https://hb.ru-msk.vkcs.cloud,multipart_size=1024,passwd_file={{ s3fs.passwd_file }},uid={{ s3fs.uid }},gid={{ s3fs.gid }},umask={{ s3fs.umask }}"
+    state: mounted
+  # no_log: true
+  become: true
+  when: s3fs.provider == "vk_ru"
